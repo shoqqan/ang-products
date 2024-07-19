@@ -29,9 +29,15 @@
               {
                 "glob": "**/*",
                 "input": "public"
+              },
+              {
+                "glob": "**/*",
+                "input": "./node_modules/@ant-design/icons-angular/src/inline-svg/",
+                "output": "/assets/"
               }
             ],
             "styles": [
+              "src/theme.less",
               "src/styles.scss"
             ],
             "scripts": []
@@ -95,8 +101,23 @@
             ],
             "scripts": []
           }
+        },
+        "lint": {
+          "builder": "@angular-eslint/builder:lint",
+          "options": {
+            "lintFilePatterns": [
+              "src/**/*.ts",
+              "src/**/*.html"
+            ]
+          }
         }
       }
     }
+  },
+  "cli": {
+    "analytics": "dffe4228-aaff-40f1-a2a0-5de5b97cd89d",
+    "schematicCollections": [
+      "@angular-eslint/schematics"
+    ]
   }
 }
