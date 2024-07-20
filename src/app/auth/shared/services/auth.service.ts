@@ -1,5 +1,4 @@
 import { Injectable, signal } from "@angular/core";
-import { HttpHeaders } from "@angular/common/http";
 import { delay, Observable, of, tap } from "rxjs";
 
 type Token = string | null | undefined;

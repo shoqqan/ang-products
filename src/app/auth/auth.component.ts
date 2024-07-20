@@ -13,7 +13,7 @@ import { NzColDirective, NzRowDirective } from "ng-zorro-antd/grid";
 import { NzButtonComponent } from "ng-zorro-antd/button";
 import { NzIconDirective } from "ng-zorro-antd/icon";
 import { NzTooltipDirective } from "ng-zorro-antd/tooltip";
-import { AuthService } from "./shared/auth.service";
+import { AuthService } from "./shared/services/auth.service";
 import { Router } from "@angular/router";
 
 @Component({
