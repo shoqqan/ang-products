@@ -1,0 +1,50 @@
+.page {
+  width: 100%;
+  min-height: 100vh;
+  padding: 50px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  justify-content: space-around;
+
+  .btn {
+    width: 100%;
+    display: flex;
+    justify-content: flex-end;
+
+    button {
+      border-radius: 10px;
+      background-color: #FFF;
+      border: 2px solid #FCE000;
+      color: #21201F;
+      font-weight: bold;
+      height: 3rem;
+      transition: all 0.3s ease-in-out;
+
+      &:hover {
+        background-color: #FCE000;
+
+      }
+    }
+  }
+}
+
+
+th {
+  background-color: #FCE000;
+  padding: 1rem;
+}
+
+tr {
+  transition: all 0.2s ease-in-out;
+  cursor: pointer;
+
+  &:hover {
+    background-color: #D2D0CC;
+  }
+}
+
+td {
+  padding: 1rem;
+
+}

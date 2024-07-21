@@ -24,4 +24,9 @@ export class ProductsService {
   createProduct(product: Omit<Product, "id">): Observable<Product> {
     return this.httpClient.post<Product>(`${this.BASE_URL}`, product);
   }
+
+  updateProduct(id: number, changes: Partial<Product>): Observable<Product> {
+    return this.httpClient.patch<Product>(`${this.BASE_URL}/${id}`, changes);
+  }
+
 }

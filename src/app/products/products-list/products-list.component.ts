@@ -64,7 +64,7 @@ export class ProductsListComponent implements OnInit {
       takeUntilDestroyed(this.destroyRef)
     ).subscribe(products => {
       this.products = products;
-      this.updateDisplayedProducts(); // Ensure displayedProducts is updated
+      this.updateDisplayedProducts();
     });
   }
 
@@ -75,7 +75,7 @@ export class ProductsListComponent implements OnInit {
 
   search(): void {
     this.visible = false;
-    this.updateDisplayedProducts(); // Ensure displayedProducts is updated
+    this.updateDisplayedProducts();
   }
 
   updateDisplayedProducts(): void {
