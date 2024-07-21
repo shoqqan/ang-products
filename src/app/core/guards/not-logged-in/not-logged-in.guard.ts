@@ -8,7 +8,7 @@ export const notLoggedInGuard: CanActivateFn = () => {
   if (authService.isAuthenticated) {
     return true;
   } else {
-    router.navigateByUrl("/sign-in");
+    router.navigateByUrl("/login");
     return false;
   }
 };

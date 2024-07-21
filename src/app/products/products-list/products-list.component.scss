@@ -6,6 +6,27 @@
   flex-wrap: wrap;
   gap: 1rem;
   justify-content: space-around;
+
+  .btn {
+    width: 100%;
+    display: flex;
+    justify-content: flex-end;
+
+    button {
+      border-radius: 10px;
+      background-color: #FFF;
+      border: 2px solid #FCE000;
+      color: #21201F;
+      font-weight: bold;
+      height: 3rem;
+      transition: all 0.3s ease-in-out;
+
+      &:hover {
+        background-color: #FCE000;
+
+      }
+    }
+  }
 }
 
 

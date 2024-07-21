@@ -1,5 +1,5 @@
 import { ChangeDetectorRef, Component, DestroyRef, inject, OnInit } from "@angular/core";
-import { Product } from "../product/product.model";
+import { Product } from "../shared/product.model";
 import { NzCardComponent } from "ng-zorro-antd/card";
 import { NzColDirective, NzRowDirective } from "ng-zorro-antd/grid";
 import { NzListGridDirective, NzListItemComponent } from "ng-zorro-antd/list";
@@ -87,6 +87,10 @@ export class ProductsListComponent implements OnInit {
 
   navigateToProduct(id: number): void {
     this.router.navigate(["/edit", id]);
+  }
+
+  navigateToCreate() {
+    this.router.navigateByUrl("/create");
   }
 
   onDelete(id: number): void {

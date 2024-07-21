@@ -1,0 +1,59 @@
+<article class="page">
+  <form nz-form [formGroup]="form" (ngSubmit)="onSubmit()" class="auth-form">
+    <h2>Create New Product</h2>
+    <nz-form-item>
+      <nz-form-label nzFor="name">Name</nz-form-label>
+      <nz-form-control nzErrorTip="Please enter name of product!">
+        <input type="text" nz-input formControlName="name" placeholder="Chair"/>
+      </nz-form-control>
+    </nz-form-item>
+    <nz-form-item>
+      <nz-form-label nzFor="description">Description</nz-form-label>
+      <nz-form-control nzErrorTip="Please enter description of product!">
+        <textarea nz-input formControlName="description" placeholder="Description" nzAutosize></textarea>
+      </nz-form-control>
+    </nz-form-item>
+    <nz-form-item>
+      <nz-form-label nzFor="description">SKU</nz-form-label>
+      <nz-form-control nzErrorTip="Please enter SKU!">
+        <input type="text" nz-input formControlName="sku" placeholder="CHAIR"/>
+      </nz-form-control>
+    </nz-form-item>
+    <nz-form-item>
+      <nz-form-label nzFor="cost">Cost</nz-form-label>
+      <nz-form-control nzErrorTip="Please enter cost of product!">
+        <nz-input-number
+          formControlName="cost"
+          [nzStep]="0.5"
+          [nzPlaceHolder]="'50'"
+        ></nz-input-number>
+      </nz-form-control>
+    </nz-form-item>
+    <h3>Profile Properties:</h3>
+    <nz-form-item>
+      <nz-form-label nzFor="type">Type</nz-form-label>
+      <nz-select formControlName="type" nzPlaceHolder="Select type">
+        <nz-option nzLabel="Furniture" nzValue="furniture"></nz-option>
+        <nz-option nzLabel="Equipment" nzValue="equipment"></nz-option>
+        <nz-option nzLabel="Stationary" nzValue="stationary"></nz-option>
+        <nz-option nzLabel="Part" nzValue="part"></nz-option>
+      </nz-select>
+    </nz-form-item>
+    <nz-form-item>
+      <nz-form-label nzFor="available">Available</nz-form-label>
+      <nz-switch formControlName="available"></nz-switch>
+    </nz-form-item>
+    <nz-form-item>
+      <nz-form-label nzFor="backlog">Backlog</nz-form-label>
+      <nz-input-number
+        formControlName="backlog"
+        [nzStep]="1"
+        [nzPlaceHolder]="'50'"
+      ></nz-input-number>
+    </nz-form-item>
+    <button nz-button class="form-button" [nzType]="'primary'" [disabled]="form.invalid"
+            nzSize="large">
+      Create Product
+    </button>
+  </form>
+</article>

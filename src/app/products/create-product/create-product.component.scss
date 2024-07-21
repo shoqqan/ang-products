@@ -1,0 +1,18 @@
+.page {
+  width: 100%;
+  min-height: 100vh;
+  padding: 50px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.auth-form {
+  padding: 32px;
+  border-radius: 32px;
+  border: 1px solid gray;
+  flex-direction: column;
+  row-gap: 2rem;
+  display: flex;
+  justify-content: center;
+}

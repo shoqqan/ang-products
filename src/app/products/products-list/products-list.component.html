@@ -1,6 +1,10 @@
 <article class="page">
-  <!--  <app-product *ngFor="let product of products" [id]="product.id" [name]="product.name"-->
-  <!--               [description]="product.description" [profile]="product.profile" [cost]="product.cost"/>-->
+  <div class="btn">
+    <button (click)="navigateToCreate()" nz-button class="form-button" [nzType]="'primary'"
+            nzSize="large">
+      Add Product
+    </button>
+  </div>
   <nz-table nzSize="middle" #nzTable [nzData]="displayedProducts">
     <thead>
     <tr>
