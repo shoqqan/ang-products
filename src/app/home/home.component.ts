@@ -1,7 +1,8 @@
-import { Component, OnInit } from "@angular/core";
+import { Component } from "@angular/core";
 import { NzContentComponent, NzHeaderComponent, NzLayoutComponent } from "ng-zorro-antd/layout";
 import { ProductsListComponent } from "../products/products-list/products-list.component";
 import { RouterOutlet } from "@angular/router";
+import { NzModalService } from "ng-zorro-antd/modal";
 
 @Component({
   selector: "app-home",
@@ -11,8 +12,10 @@ import { RouterOutlet } from "@angular/router";
     NzHeaderComponent,
     NzContentComponent,
     ProductsListComponent,
-    RouterOutlet
+    RouterOutlet,
   ],
+
+  providers: [NzModalService],
   templateUrl: "./home.component.html",
   styleUrl: "./home.component.scss"
 })

@@ -1,4 +1,43 @@
 <article class="page">
-  <app-product *ngFor="let product of products" [id]="product.id" [name]="product.name"
-               [description]="product.description" [profile]="product.profile" [cost]="product.cost"/>
+  <!--  <app-product *ngFor="let product of products" [id]="product.id" [name]="product.name"-->
+  <!--               [description]="product.description" [profile]="product.profile" [cost]="product.cost"/>-->
+  <nz-table nzSize="middle" #nzTable [nzData]="displayedProducts">
+    <thead>
+    <tr>
+      <th nzWidth="200px">
+        ID
+      </th>
+      <th nzCustomFilter>
+        <nz-filter-trigger [(nzVisible)]="visible" [nzActive]="searchValue.length > 0" [nzDropdownMenu]="menu">
+          <span nz-icon nzType="search"></span>
+        </nz-filter-trigger>
+        Name
+      </th>
+      <th>SKU</th>
+      <th>Cost</th>
+      <th>Description</th>
+      <th nzWidth="60px"></th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr *ngFor="let data of nzTable.data" (click)="navigateToProduct(data.id)">
+      <td>{{ data.id }}</td>
+      <td>{{ data.name }}</td>
+      <td>{{ data.sku }}</td>
+      <td>{{ data.cost | currency }}</td>
+      <td>{{ data.description }}</td>
+      <td (click)="createDeleteModal(data.id,$event)"><span nz-icon nzType="delete" nzTheme="outline"></span></td>
+    </tr>
+    </tbody>
+  </nz-table>
+  <nz-dropdown-menu #menu="nzDropdownMenu">
+    <div class="ant-table-filter-dropdown">
+      <div class="search-box">
+        <input type="text" nz-input placeholder="Search name" [(ngModel)]="searchValue"/>
+        <button nz-button nzSize="small" nzType="primary" (click)="search()" class="search-button">Search</button>
+        <button nz-button nzSize="small" (click)="reset()">Reset</button>
+      </div>
+    </div>
+  </nz-dropdown-menu>
+
 </article>
