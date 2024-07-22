@@ -12,7 +12,7 @@ import { ProductsService } from "../shared/services/products.service";
 import { LowerCasePipe, NgForOf, NgIf, NgSwitch, NgSwitchCase, NgSwitchDefault, TitleCasePipe } from "@angular/common";
 import { NzIconDirective } from "ng-zorro-antd/icon";
 
-interface InputField {
+export interface InputField {
   inputType: string
   formControlName: string,
   label: string

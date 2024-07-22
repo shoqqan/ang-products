@@ -10,7 +10,9 @@ import { NzInputDirective } from "ng-zorro-antd/input";
 import { NzInputNumberComponent } from "ng-zorro-antd/input-number";
 import { NzOptionComponent, NzSelectComponent } from "ng-zorro-antd/select";
 import { NzSwitchComponent } from "ng-zorro-antd/switch";
-import { NgIf } from "@angular/common";
+import { LowerCasePipe, NgForOf, NgIf, NgSwitch, NgSwitchCase, NgSwitchDefault, TitleCasePipe } from "@angular/common";
+import { InputField } from "../create-product/create-product.component";
+import { NzIconDirective } from "ng-zorro-antd/icon";
 
 @Component({
   selector: "app-edit-product",
@@ -28,23 +30,46 @@ import { NgIf } from "@angular/common";
     NzSelectComponent,
     NzSwitchComponent,
     ReactiveFormsModule,
-    NgIf
+    NgIf,
+    TitleCasePipe,
+    LowerCasePipe,
+    NgSwitchCase,
+    NgForOf,
+    NgSwitch,
+    NzIconDirective,
+    NgSwitchDefault
   ],
   templateUrl: "./edit-product.component.html",
   styleUrl: "./edit-product.component.scss"
 })
 export class EditProductComponent implements OnInit {
   form!: FormGroup;
+  profileForm!: FormGroup;
   product!: Product;
   id!: number;
   initialFormValues!: any;
+  profileInputList: InputField[] = [
+    {
+      label: "Type",
+      formControlName: "type",
+      inputType: "select",
+      value: ["part", "furniture", "stationary", "equipment"]
+    },
+    {
+      label: "Available",
+      formControlName: "available",
+      inputType: "switch",
+      value: true
+    },
+    {
+      label: "Backlog",
+      formControlName: "backlog",
+      inputType: "number",
+      value: null
+    },
+  ];
 
-  constructor(
-    private productsService: ProductsService,
-    private fb: NonNullableFormBuilder,
-    private router: Router,
-    private route: ActivatedRoute
-  ) {
+  constructor(private productsService: ProductsService, private fb: NonNullableFormBuilder, private router: Router, private route: ActivatedRoute) {
   }
 
   ngOnInit(): void {
@@ -52,6 +77,19 @@ export class EditProductComponent implements OnInit {
       this.id = Number(params["id"]);
       this.loadProduct();
     });
+
+    this.form = this.fb.group({
+      name: ["", Validators.required],
+      description: ["", Validators.required],
+      cost: [0, [Validators.required, Validators.min(0)]],
+      sku: ["", Validators.required]
+    });
+    this.profileForm = this.fb.group({
+      type: ["furniture"],
+      available: [true],
+      backlog: [null],
+    });
+    console.log("on init", this.profileForm.getRawValue());
   }
 
   loadProduct(): void {
@@ -67,24 +105,63 @@ export class EditProductComponent implements OnInit {
       description: [this.product.description, Validators.required],
       cost: [this.product.cost, [Validators.required, Validators.min(0)]],
       sku: [this.product.sku, Validators.required],
-      type: [this.product.profile.type],
-      available: [this.product.profile.available],
-      backlog: [this.product.profile.backlog],
     });
-
+    for (const property in this.product.profile) {
+      if (property !== "type" && property !== "available" && property !== "backlog") {
+        let propertyInputType;
+        switch (typeof property) {
+          case "boolean":
+            propertyInputType = "switch";
+            break;
+          case "number":
+            propertyInputType = "number";
+            break;
+          default:
+            propertyInputType = "text";
+            break;
+        }
+        this.profileInputList.push({
+          inputType: propertyInputType,
+          label: property,
+          formControlName: property,
+          value: this.product.profile[property]
+        });
+      }
+    }
+    this.refreshProfileForm();
     this.initialFormValues = this.form.getRawValue(); // Сохранение исходных значений формы
+  }
+
+  refreshProfileForm() {
+    Object.keys(this.profileForm.controls).forEach(controlName => {
+      this.profileForm.removeControl(controlName);
+    });
+    this.profileInputList.forEach(input => {
+      this.profileForm.addControl(input.formControlName, this.fb.control(input.value));
+    });
+  }
+
+  addInputField() {
+    const formControlName = prompt("FormControlName input: ");
+    const label = prompt("Label input: ");
+    this.profileInputList.push({inputType: "text", formControlName: formControlName!, label: label!});
+    this.refreshProfileForm();
+  }
+
+  removeInputField(inputField: InputField) {
+    this.profileInputList = this.profileInputList.filter(field => field !== inputField);
+    this.profileForm.removeControl(inputField.formControlName);
   }
 
   getChangedValues() {
     const changedValues: any = {};
     const currentValues = this.form.getRawValue();
-
     for (const key in currentValues) {
       if (currentValues[key] !== this.initialFormValues[key]) {
         changedValues[key] = currentValues[key];
       }
     }
-
+    changedValues.profile = this.profileForm.getRawValue();
     return changedValues;
   }
 
@@ -94,8 +171,10 @@ export class EditProductComponent implements OnInit {
     }
 
     const changedValues = this.getChangedValues();
-    if (Object.keys(changedValues).length > 0) {
-      this.productsService.updateProduct(this.id, changedValues).subscribe(() => this.router.navigateByUrl("/"));
-    }
+    console.log(changedValues);
+    console.log(this.profileInputList);
+    this.productsService.updateProduct(this.id, changedValues).subscribe(() => {
+      console.log("responce", JSON.stringify(changedValues));
+    });
   }
 }

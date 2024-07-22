@@ -5,7 +5,7 @@
       Add Product
     </button>
   </div>
-  <nz-table nzSize="middle" #nzTable [nzData]="displayedProducts">
+  <nz-table nzSize="middle" #nzTable [nzData]="displayedProducts" *ngIf="displayedProducts.length">
     <thead>
     <tr>
       <th nzWidth="200px">

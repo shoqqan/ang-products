@@ -1,7 +1,7 @@
 import { Component } from "@angular/core";
 import { NzContentComponent, NzHeaderComponent, NzLayoutComponent } from "ng-zorro-antd/layout";
 import { ProductsListComponent } from "../products/products-list/products-list.component";
-import { RouterOutlet } from "@angular/router";
+import { Router, RouterOutlet } from "@angular/router";
 import { NzModalService } from "ng-zorro-antd/modal";
 
 @Component({
@@ -20,6 +20,10 @@ import { NzModalService } from "ng-zorro-antd/modal";
   styleUrl: "./home.component.scss"
 })
 export class HomeComponent {
+  constructor(private router: Router) {
+  }
 
-
+  public navigateToHome() {
+    this.router.navigateByUrl("/");
+  };
 }

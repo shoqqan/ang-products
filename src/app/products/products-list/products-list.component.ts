@@ -5,7 +5,7 @@ import { NzColDirective, NzRowDirective } from "ng-zorro-antd/grid";
 import { NzListGridDirective, NzListItemComponent } from "ng-zorro-antd/list";
 import { ProductsService } from "../shared/services/products.service";
 import { takeUntilDestroyed } from "@angular/core/rxjs-interop";
-import { CurrencyPipe, NgForOf } from "@angular/common";
+import { CurrencyPipe, NgForOf, NgIf } from "@angular/common";
 import {
   NzFilterTriggerComponent,
   NzTableComponent,
@@ -40,6 +40,7 @@ import { NzModalRef, NzModalService } from "ng-zorro-antd/modal";
     FormsModule,
     CurrencyPipe,
     NzThMeasureDirective,
+    NgIf,
   ],
   templateUrl: "./products-list.component.html",
   styleUrl: "./products-list.component.scss"

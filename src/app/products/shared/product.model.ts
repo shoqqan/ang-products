@@ -1,10 +1,6 @@
 type ProfileType = "furniture" | "equipment" | "stationary" | "part"
 
-export interface Profile {
-  type: ProfileType;
-  available: boolean;
-  backlog: number;
-}
+export type Profile = Record<string, any>;
 
 export interface Product {
   id: number;
