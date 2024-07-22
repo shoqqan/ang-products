@@ -32,11 +32,12 @@
     <ng-container *ngIf="profileInputList.length">
       <form nz-form [formGroup]="profileForm" class="auth-form">
         <h3>Profile Properties:</h3>
-        <nz-form-item *ngFor="let input of profileInputList" [ngSwitch]="input.inputType">
+        <nz-form-item class="form-item" *ngFor="let input of profileInputList" [ngSwitch]="input.inputType">
           <nz-form-label [nzFor]="input.formControlName">{{ input.label }}</nz-form-label>
           <ng-container *ngSwitchCase="'select'">
             <nz-select [formControlName]="input.formControlName" nzPlaceHolder="Select {{input.label | lowercase}}">
-              <nz-option *ngFor="let option of input.value" [nzLabel]="option|titlecase" [nzValue]="option"></nz-option>
+              <nz-option *ngFor="let option of input.value" [nzLabel]="option|titlecase"
+                         [nzValue]="option"></nz-option>
             </nz-select>
           </ng-container>
           <ng-container *ngSwitchCase="'switch'">
@@ -53,6 +54,8 @@
             <input type="text" nz-input [formControlName]="input.formControlName"
                    [placeholder]="input.formControlName | titlecase"/>
           </ng-container>
+          <button nz-button (click)="removeInputField(input)"><span nz-icon nzType="delete" nzTheme="outline"></span>
+          </button>
         </nz-form-item>
         <button nz-button class="form-button" [nzType]="'primary'" nzSize="large" (click)="addInputField()">
           Add Properties

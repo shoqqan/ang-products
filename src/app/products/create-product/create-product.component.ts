@@ -2,7 +2,7 @@ import { Component, OnInit } from "@angular/core";
 import { NzButtonComponent } from "ng-zorro-antd/button";
 import { NzColDirective, NzRowDirective } from "ng-zorro-antd/grid";
 import { NzFormControlComponent, NzFormDirective, NzFormLabelComponent } from "ng-zorro-antd/form";
-import { NzInputDirective } from "ng-zorro-antd/input";
+import { NzInputDirective, NzInputGroupComponent } from "ng-zorro-antd/input";
 import { FormGroup, FormsModule, NonNullableFormBuilder, ReactiveFormsModule, Validators } from "@angular/forms";
 import { Router } from "@angular/router";
 import { NzOptionComponent, NzSelectComponent } from "ng-zorro-antd/select";
@@ -10,6 +10,7 @@ import { NzInputNumberComponent } from "ng-zorro-antd/input-number";
 import { NzSwitchComponent } from "ng-zorro-antd/switch";
 import { ProductsService } from "../shared/services/products.service";
 import { LowerCasePipe, NgForOf, NgIf, NgSwitch, NgSwitchCase, NgSwitchDefault, TitleCasePipe } from "@angular/common";
+import { NzIconDirective } from "ng-zorro-antd/icon";
 
 interface InputField {
   inputType: string
@@ -41,7 +42,9 @@ interface InputField {
     NgSwitchCase,
     LowerCasePipe,
     TitleCasePipe,
-    NgSwitchDefault
+    NgSwitchDefault,
+    NzInputGroupComponent,
+    NzIconDirective
   ],
   templateUrl: "./create-product.component.html",
   styleUrl: "./create-product.component.scss"
@@ -95,9 +98,8 @@ export class CreateProductComponent implements OnInit {
 
   addInputField() {
     const formControlName = prompt("FormControlName input: ");
-    const inputType = prompt("Type input: ");
     const label = prompt("Label input: ");
-    this.profileInputList.push({inputType: inputType!, formControlName: formControlName!, label: label!});
+    this.profileInputList.push({inputType: "text", formControlName: formControlName!, label: label!});
     this.refreshProfileForm();
   }
 
@@ -120,6 +122,6 @@ export class CreateProductComponent implements OnInit {
         ...this.profileForm.value
       }
     };
-    console.log(productData);
+    this.productsService.createProduct(productData).subscribe(() => this.router.navigateByUrl("/"));
   }
 }
