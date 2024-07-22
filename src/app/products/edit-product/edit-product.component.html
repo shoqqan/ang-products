@@ -1,5 +1,5 @@
 <article class="page">
-  <form nz-form [formGroup]="form" class="auth-form">
+  <form nz-form [formGroup]="form" class="auth-form" *ngIf="isFormUploaded">
     <h2>Edit</h2>
     <nz-form-item>
       <nz-form-label nzFor="name">Name</nz-form-label>

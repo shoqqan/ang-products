@@ -29,4 +29,7 @@ export class ProductsService {
     return this.httpClient.patch<Product>(`${this.BASE_URL}/${id}`, changes);
   }
 
+  getProduct(id: number): Observable<Product> {
+    return this.httpClient.get<Product>(`${this.BASE_URL}/${id}`);
+  }
 }
