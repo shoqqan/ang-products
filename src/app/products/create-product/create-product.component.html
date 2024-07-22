@@ -29,28 +29,36 @@
         ></nz-input-number>
       </nz-form-control>
     </nz-form-item>
-    <h3>Profile Properties:</h3>
-    <nz-form-item>
-      <nz-form-label nzFor="type">Type</nz-form-label>
-      <nz-select formControlName="type" nzPlaceHolder="Select type">
-        <nz-option nzLabel="Furniture" nzValue="furniture"></nz-option>
-        <nz-option nzLabel="Equipment" nzValue="equipment"></nz-option>
-        <nz-option nzLabel="Stationary" nzValue="stationary"></nz-option>
-        <nz-option nzLabel="Part" nzValue="part"></nz-option>
-      </nz-select>
-    </nz-form-item>
-    <nz-form-item>
-      <nz-form-label nzFor="available">Available</nz-form-label>
-      <nz-switch formControlName="available"></nz-switch>
-    </nz-form-item>
-    <nz-form-item>
-      <nz-form-label nzFor="backlog">Backlog</nz-form-label>
-      <nz-input-number
-        formControlName="backlog"
-        [nzStep]="1"
-        [nzPlaceHolder]="'50'"
-      ></nz-input-number>
-    </nz-form-item>
+    <ng-container *ngIf="profileInputList.length">
+      <form nz-form [formGroup]="profileForm" class="auth-form">
+        <h3>Profile Properties:</h3>
+        <nz-form-item *ngFor="let input of profileInputList" [ngSwitch]="input.inputType">
+          <nz-form-label [nzFor]="input.formControlName">{{ input.label }}</nz-form-label>
+          <ng-container *ngSwitchCase="'select'">
+            <nz-select [formControlName]="input.formControlName" nzPlaceHolder="Select {{input.label | lowercase}}">
+              <nz-option *ngFor="let option of input.value" [nzLabel]="option|titlecase" [nzValue]="option"></nz-option>
+            </nz-select>
+          </ng-container>
+          <ng-container *ngSwitchCase="'switch'">
+            <nz-switch [formControlName]="input.formControlName"></nz-switch>
+          </ng-container>
+          <ng-container *ngSwitchCase="'number'">
+            <nz-input-number
+              [formControlName]="input.formControlName"
+              [nzStep]="1"
+              [nzPlaceHolder]="'50'"
+            ></nz-input-number>
+          </ng-container>
+          <ng-container *ngSwitchDefault>
+            <input type="text" nz-input [formControlName]="input.formControlName"
+                   [placeholder]="input.formControlName | titlecase"/>
+          </ng-container>
+        </nz-form-item>
+        <button nz-button class="form-button" [nzType]="'primary'" nzSize="large" (click)="addInputField()">
+          Add Properties
+        </button>
+      </form>
+    </ng-container>
     <button nz-button class="form-button" [nzType]="'primary'" [disabled]="form.invalid"
             nzSize="large">
       Create Product

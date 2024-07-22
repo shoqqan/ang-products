@@ -9,6 +9,14 @@ import { NzOptionComponent, NzSelectComponent } from "ng-zorro-antd/select";
 import { NzInputNumberComponent } from "ng-zorro-antd/input-number";
 import { NzSwitchComponent } from "ng-zorro-antd/switch";
 import { ProductsService } from "../shared/services/products.service";
+import { LowerCasePipe, NgForOf, NgIf, NgSwitch, NgSwitchCase, NgSwitchDefault, TitleCasePipe } from "@angular/common";
+
+interface InputField {
+  inputType: string
+  formControlName: string,
+  label: string
+  value?: any
+}
 
 @Component({
   selector: "app-create-product",
@@ -26,13 +34,41 @@ import { ProductsService } from "../shared/services/products.service";
     NzOptionComponent,
     FormsModule,
     NzInputNumberComponent,
-    NzSwitchComponent
+    NzSwitchComponent,
+    NgIf,
+    NgForOf,
+    NgSwitch,
+    NgSwitchCase,
+    LowerCasePipe,
+    TitleCasePipe,
+    NgSwitchDefault
   ],
   templateUrl: "./create-product.component.html",
   styleUrl: "./create-product.component.scss"
 })
 export class CreateProductComponent implements OnInit {
   form!: FormGroup;
+  profileForm!: FormGroup;
+  profileInputList: InputField[] = [
+    {
+      label: "Type",
+      formControlName: "type",
+      inputType: "select",
+      value: ["part", "furniture", "stationary", "equipment"]
+    },
+    {
+      label: "Available",
+      formControlName: "available",
+      inputType: "switch",
+      value: true
+    },
+    {
+      label: "Backlog",
+      formControlName: "backlog",
+      inputType: "number",
+      value: null
+    },
+  ];
 
   constructor(private productsService: ProductsService, private fb: NonNullableFormBuilder, private router: Router) {
   }
@@ -42,12 +78,32 @@ export class CreateProductComponent implements OnInit {
       name: ["", Validators.required],
       description: ["", Validators.required],
       cost: [0, [Validators.required, Validators.min(0)]],
-      sku: ["", Validators.required],
+      sku: ["", Validators.required]
+    });
+    this.profileForm = this.fb.group({
       type: ["furniture"],
       available: [true],
       backlog: [null],
-      customProperties: this.fb.array([])
     });
+  }
+
+  refreshProfileForm() {
+    this.profileInputList.forEach(input => {
+      this.profileForm.addControl(input.formControlName, this.fb.control(""));
+    });
+  }
+
+  addInputField() {
+    const formControlName = prompt("FormControlName input: ");
+    const inputType = prompt("Type input: ");
+    const label = prompt("Label input: ");
+    this.profileInputList.push({inputType: inputType!, formControlName: formControlName!, label: label!});
+    this.refreshProfileForm();
+  }
+
+  removeInputField(inputField: InputField) {
+    this.profileInputList = this.profileInputList.filter(field => field !== inputField);
+    this.refreshProfileForm();
   }
 
   onSubmit(): void {
@@ -61,12 +117,9 @@ export class CreateProductComponent implements OnInit {
       cost: this.form.value.cost,
       sku: this.form.value.sku,
       profile: {
-        type: this.form.value.type,
-        available: this.form.value.available,
-        backlog: this.form.value.backlog
+        ...this.profileForm.value
       }
     };
     console.log(productData);
-    this.productsService.createProduct(productData).subscribe(() => this.router.navigateByUrl("/"));
   }
 }
