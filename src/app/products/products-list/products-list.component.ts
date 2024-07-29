@@ -91,7 +91,7 @@ export class ProductsListComponent implements OnInit {
     this.displayedProducts = this.products.filter(product =>
       product.name.includes(this.searchValue)
     );
-    this.cdr.detectChanges(); // Manually trigger change detection
+    this.cdr.detectChanges();
   }
 
   navigateToProduct(id: number): void {

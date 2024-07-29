@@ -3,7 +3,7 @@
     <h2>Authentication</h2>
     <nz-form-item>
       <nz-form-control nzErrorTip="Please input your token!">
-        <input type="text" nz-input formControlName="token" placeholder="Token" class="auth-input"/>
+        <input type="text" nz-input formControlName="token" placeholder="Token (type anything...)" class="auth-input"/>
       </nz-form-control>
     </nz-form-item>
     <button nz-button class="form-button" [nzType]="'primary'" [disabled]="form.hasError('required','token')"

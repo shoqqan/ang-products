@@ -3,6 +3,9 @@ import { NzContentComponent, NzHeaderComponent, NzLayoutComponent } from "ng-zor
 import { ProductsListComponent } from "../products/products-list/products-list.component";
 import { Router, RouterOutlet } from "@angular/router";
 import { NzModalService } from "ng-zorro-antd/modal";
+import { NzButtonComponent } from "ng-zorro-antd/button";
+import { NzIconDirective } from "ng-zorro-antd/icon";
+import { AuthService } from "../auth/shared/services/auth.service";
 
 @Component({
   selector: "app-home",
@@ -13,6 +16,8 @@ import { NzModalService } from "ng-zorro-antd/modal";
     NzContentComponent,
     ProductsListComponent,
     RouterOutlet,
+    NzButtonComponent,
+    NzIconDirective,
   ],
 
   providers: [NzModalService],
@@ -20,10 +25,15 @@ import { NzModalService } from "ng-zorro-antd/modal";
   styleUrl: "./home.component.scss"
 })
 export class HomeComponent {
-  constructor(private router: Router) {
+  constructor(private router: Router, private authService: AuthService) {
   }
 
   public navigateToHome() {
     this.router.navigateByUrl("/");
   };
+
+  public logout() {
+    this.authService.signOut();
+    this.router.navigateByUrl("/login");
+  }
 }

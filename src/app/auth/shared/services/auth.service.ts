@@ -13,9 +13,6 @@ export interface ILoginDto {
 export class AuthService {
   private currentUserSig = signal<Token>(localStorage.getItem("token") ? localStorage.getItem("token") : undefined);
 
-  constructor() {
-  }
-
   private setUser(token: Token): void {
     localStorage.setItem("token", token ? token : "");
     this.currentUserSig.set(token);
@@ -38,6 +35,7 @@ export class AuthService {
   public signOut(): void {
     // some rxjs blah blah blah
     this.setUser(null);
+
   }
 }
 

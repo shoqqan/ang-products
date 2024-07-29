@@ -1,6 +1,10 @@
 <nz-layout class="layout">
   <nz-header class="header">
     <h1 (click)="navigateToHome()">Products</h1>
+    <button nz-button nzType="primary" (click)="logout()">
+      <span nz-icon nzType="logout" nzTheme="outline"></span>
+      Log Out
+    </button>
   </nz-header>
   <nz-content class="main-content">
     <router-outlet/>
