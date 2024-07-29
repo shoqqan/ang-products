@@ -5,7 +5,7 @@
       Add Product
     </button>
   </div>
-  <nz-table nzSize="middle" #nzTable [nzData]="displayedProducts" *ngIf="displayedProducts.length">
+  <nz-table nzSize="middle" #nzTable [nzData]="displayedProducts">
     <thead>
     <tr>
       <th nzWidth="200px">
@@ -24,6 +24,28 @@
     </tr>
     </thead>
     <tbody>
+    <ng-container *ngIf="loading">
+      <tr *ngFor="let skeleton of Array(5)">
+        <td>
+          <nz-skeleton [nzActive]="true"></nz-skeleton>
+        </td>
+        <td>
+          <nz-skeleton [nzActive]="true"></nz-skeleton>
+        </td>
+        <td>
+          <nz-skeleton [nzActive]="true"></nz-skeleton>
+        </td>
+        <td>
+          <nz-skeleton [nzActive]="true"></nz-skeleton>
+        </td>
+        <td>
+          <nz-skeleton [nzActive]="true"></nz-skeleton>
+        </td>
+        <td>
+          <nz-skeleton [nzActive]="true"></nz-skeleton>
+        </td>
+      </tr>
+    </ng-container>
     <tr *ngFor="let data of nzTable.data" (click)="navigateToProduct(data.id)">
       <td>{{ data.id }}</td>
       <td>{{ data.name }}</td>

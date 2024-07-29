@@ -19,6 +19,8 @@ import { NzDropdownMenuComponent } from "ng-zorro-antd/dropdown";
 import { FormsModule } from "@angular/forms";
 import { Router } from "@angular/router";
 import { NzModalRef, NzModalService } from "ng-zorro-antd/modal";
+import { finalize } from "rxjs";
+import { NzSkeletonComponent } from "ng-zorro-antd/skeleton";
 
 @Component({
   selector: "app-products-list",
@@ -41,11 +43,13 @@ import { NzModalRef, NzModalService } from "ng-zorro-antd/modal";
     CurrencyPipe,
     NzThMeasureDirective,
     NgIf,
+    NzSkeletonComponent,
   ],
   templateUrl: "./products-list.component.html",
   styleUrl: "./products-list.component.scss"
 })
 export class ProductsListComponent implements OnInit {
+  loading = true;
   products: Product[] = [];
   private destroyRef = inject(DestroyRef);
   displayedProducts: Product[] = [];
@@ -56,13 +60,17 @@ export class ProductsListComponent implements OnInit {
     private productsService: ProductsService,
     private modal: NzModalService,
     private router: Router,
-    private cdr: ChangeDetectorRef // Inject ChangeDetectorRef
+    private cdr: ChangeDetectorRef
   ) {
   }
 
   ngOnInit(): void {
+    this.loading = true;
     this.productsService.getProducts().pipe(
-      takeUntilDestroyed(this.destroyRef)
+      takeUntilDestroyed(this.destroyRef),
+      finalize(() => {
+        this.loading = false;
+      })
     ).subscribe(products => {
       this.products = products;
       this.updateDisplayedProducts();
@@ -97,7 +105,7 @@ export class ProductsListComponent implements OnInit {
   onDelete(id: number): void {
     this.productsService.deleteProduct(id).subscribe(() => {
       this.products = this.products.filter(product => product.id !== id);
-      this.updateDisplayedProducts(); // Ensure displayedProducts is updated
+      this.updateDisplayedProducts();
     });
   }
 
@@ -123,4 +131,6 @@ export class ProductsListComponent implements OnInit {
       ]
     });
   }
+
+  protected readonly Array = Array;
 }

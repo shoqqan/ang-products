@@ -7,6 +7,14 @@
   gap: 1rem;
   justify-content: space-around;
 
+  nz-table {
+    width: 100%;
+  }
+
+  nz-skeleton {
+    width: 100%;
+  }
+
   .btn {
     width: 100%;
     display: flex;
