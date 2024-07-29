@@ -6,8 +6,10 @@
         <input type="text" nz-input formControlName="token" placeholder="Token (type anything...)" class="auth-input"/>
       </nz-form-control>
     </nz-form-item>
-    <button nz-button class="form-button" [nzType]="'primary'" [disabled]="form.hasError('required','token')"
+    <button nz-button [nzLoading]="isLoading" class="form-button" [nzType]="'primary'"
+            [disabled]="form.hasError('required','token')"
             nzSize="large">
+      <span nz-icon nzType="poweroff"></span>
       Sign
     </button>
   </form>

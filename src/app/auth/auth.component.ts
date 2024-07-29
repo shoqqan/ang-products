@@ -15,6 +15,7 @@ import { NzIconDirective } from "ng-zorro-antd/icon";
 import { NzTooltipDirective } from "ng-zorro-antd/tooltip";
 import { AuthService } from "./shared/services/auth.service";
 import { Router } from "@angular/router";
+import { finalize } from "rxjs";
 
 @Component({
   selector: "app-auth",
@@ -25,6 +26,7 @@ import { Router } from "@angular/router";
 })
 export class AuthComponent implements OnInit {
   form!: FormGroup;
+  isLoading = false;
 
   constructor(private fb: NonNullableFormBuilder, private authService: AuthService, private router: Router) {
   }
@@ -36,7 +38,10 @@ export class AuthComponent implements OnInit {
   }
 
   onSubmit(): void {
-    this.authService.signIn(this.form.getRawValue()).subscribe(
+    this.isLoading = true;
+    this.authService.signIn(this.form.getRawValue()).pipe(finalize(() => {
+      this.isLoading = false;
+    })).subscribe(
       () => {
         this.router.navigateByUrl("/");
       }

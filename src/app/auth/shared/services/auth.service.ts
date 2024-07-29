@@ -1,5 +1,5 @@
 import { Injectable, signal } from "@angular/core";
-import { delay, Observable, of, tap } from "rxjs";
+import { delay, finalize, Observable, of, tap } from "rxjs";
 
 type Token = string | null | undefined;
 
@@ -28,7 +28,9 @@ export class AuthService {
 
   public signIn(data: ILoginDto): Observable<ILoginDto> {
     // signing mock
-    return of(data).pipe(delay(1000), tap(res => this.setUser(res.token)));
+    return of(data).pipe(delay(1000), tap(res => {
+      this.setUser(res.token);
+    }));
 
   }
 
