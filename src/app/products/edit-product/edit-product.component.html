@@ -57,12 +57,12 @@
           <button nz-button (click)="removeInputField(input)"><span nz-icon nzType="delete" nzTheme="outline"></span>
           </button>
         </nz-form-item>
-        <button nz-button class="form-button" [nzType]="'primary'" nzSize="large" (click)="addInputField()">
+        <button nz-button class="form-button" nzType="dashed" nzShape="round" nzSize="large" (click)="addInputField()">
           Add Properties
         </button>
       </form>
     </ng-container>
-    <button nz-button class="form-button" [nzType]="'primary'" [disabled]="form.invalid"
+    <button nz-button nzShape="round" class="form-button" [nzType]="'primary'" [disabled]="form.invalid"
             nzSize="large" (click)="onSubmit()">
       Save
     </button>
