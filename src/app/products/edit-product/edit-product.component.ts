@@ -80,7 +80,6 @@ export class EditProductComponent implements OnInit {
         this.productsService.getProduct(id).pipe(
           tap((product: Product) => {
             this.product = product;
-            console.log(product);
             this.form = this.fb.group({
               name: [this.product.name, Validators.required],
               description: [this.product.description, Validators.required],
@@ -110,7 +109,7 @@ export class EditProductComponent implements OnInit {
                 });
               }
             }
-            this.initialFormValues = this.form.getRawValue(); // Сохранение исходных значений формы
+            this.initialFormValues = this.form.getRawValue();
             this.refreshProfileForm();
             this.isFormUploaded = true;
           })

@@ -38,7 +38,7 @@ export class AuthComponent implements OnInit {
   onSubmit(): void {
     this.authService.signIn(this.form.getRawValue()).subscribe(
       () => {
-        this.router.navigateByUrl("/home");
+        this.router.navigateByUrl("/");
       }
     );
   }
